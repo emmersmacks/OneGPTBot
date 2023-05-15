@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\GitUnity\\ChatGPT\\ChatBotGPT\\ChatBotGPT\\ChatBotGPT.csproj": {}
+    "C:\\GitUnity\\CompuchoGPTBot\\ChatBotGPT\\ChatBotGPT.csproj": {}
   },
   "projects": {
-    "C:\\GitUnity\\ChatGPT\\ChatBotGPT\\ChatBotGPT\\ChatBotGPT.csproj": {
+    "C:\\GitUnity\\CompuchoGPTBot\\ChatBotGPT\\ChatBotGPT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GitUnity\\ChatGPT\\ChatBotGPT\\ChatBotGPT\\ChatBotGPT.csproj",
+        "projectUniqueName": "C:\\GitUnity\\CompuchoGPTBot\\ChatBotGPT\\ChatBotGPT.csproj",
         "projectName": "ChatBotGPT",
-        "projectPath": "C:\\GitUnity\\ChatGPT\\ChatBotGPT\\ChatBotGPT\\ChatBotGPT.csproj",
-        "packagesPath": "C:\\Users\\visne\\.nuget\\packages\\",
-        "outputPath": "C:\\GitUnity\\ChatGPT\\ChatBotGPT\\ChatBotGPT\\obj\\",
+        "projectPath": "C:\\GitUnity\\CompuchoGPTBot\\ChatBotGPT\\ChatBotGPT.csproj",
+        "packagesPath": "C:\\Users\\Анастасия\\.nuget\\packages\\",
+        "outputPath": "C:\\GitUnity\\CompuchoGPTBot\\ChatBotGPT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\visne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Анастасия\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,9 +40,31 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools.DotNet": {
+              "target": "Package",
+              "version": "[2.0.3, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.2.8, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.4, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
+              "target": "Package",
+              "version": "[1.1.0, )"
             },
             "Telegram.Bot": {
               "target": "Package",
@@ -65,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
