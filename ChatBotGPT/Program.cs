@@ -2,6 +2,21 @@
 
 using ChatBotGPT;
 using ChatBotGPT.ChatGPT;
+using ChatBotGPT.Database;
+using ChatBotGPT.Database.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Telegram.Bot;
+using VideoBot.Data.SSH;
+using VideoBot.Handlers;
+using VideoBot.Handlers.Messages.Impl;
+using VideoBot.Services;
 
-var bot = new TelegramBot();
-bot.Start();
+var setup = new Setup();
+var serviceProvider = setup.Init();
+
+var bot = serviceProvider.GetService<TelegramBot>();
+await bot.Start();
+
+Console.WriteLine("Program ended");
+
+

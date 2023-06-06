@@ -2,5 +2,5 @@
 
 public class AccessModel
 {
-    public string Username { get; set; }
+    public long Id { get; set; }
 }
