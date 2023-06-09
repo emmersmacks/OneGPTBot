@@ -3,6 +3,7 @@ using ChatBotGPT.Database;
 using ChatBotGPT.Database.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using VideoBot.Services;
 
 namespace VideoBot.Handlers.Messages.Impl;
@@ -30,10 +31,13 @@ public class MessageHandler : IMessageHandler
 
         user.Messages.Add($"user:{message.Text}");
         user.Messages.Add($"{response.choices[0].message.role}:{response.choices[0].message.content}");
-        
+
+        var responseText = response.choices[0].message.content;
+        //responseText = responseText.Replace("#", @"\#");
         await _telegramBotClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: response.choices[0].message.content
+            text: responseText,
+            ParseMode.Markdown
         );
     }
 

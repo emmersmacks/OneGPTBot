@@ -8,7 +8,7 @@ public class GPTClient
 {
     private readonly string _model;
     
-    private const string API_KEY = "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";
+    private const string API_KEY = "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";
     private const string CHAT_URL = "https://api.openai.com/v1/chat/completions";
     private const string DALLE_URL = "https://api.openai.com/v1/images/generations";
     

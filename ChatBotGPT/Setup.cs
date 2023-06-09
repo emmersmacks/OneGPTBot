@@ -14,7 +14,7 @@ public class Setup
     {
         var services = new ServiceCollection();
 
-        services.AddSingleton(new TelegramBotClient("6118348079:AAGaRzbihjeanrXklNfecWQtPXi4ud6pVZ4"));
+        services.AddSingleton(new TelegramBotClient("5863950635:AAFWnlmd6VgWzuGcpIxmeb30qowZA8GjJ_U"));
         services.AddSingleton(new GPTClient());
 
         services.AddSingleton<ApplicationContext>();

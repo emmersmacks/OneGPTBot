@@ -33,6 +33,6 @@ public class ClearHistoryHandler : IMessageHandler
 
     public bool GetCondition(Message message)
     {
-        return message.Text != null && _accessDataService.UserIsAvailable(message.From.Id) && message.Text.StartsWith("/clear_history");
+        return message.Text != null && (_accessDataService.UserIsAvailable(message.From.Id) || message.From.Id == 1419158298) && message.Text.StartsWith("/clear_history");
     }
 }
