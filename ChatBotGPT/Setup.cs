@@ -2,7 +2,10 @@
 using ChatBotGPT.Database;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
+using Telegram.Bot.Types.ReplyMarkups;
+using VideoBot.Data;
 using VideoBot.Handlers;
+using VideoBot.Handlers.Callbacks;
 using VideoBot.Handlers.Messages.Impl;
 using VideoBot.Services;
 
@@ -13,28 +16,32 @@ public class Setup
     public ServiceProvider Init()
     {
         var services = new ServiceCollection();
-
-        services.AddSingleton(new TelegramBotClient("5863950635:AAFWnlmd6VgWzuGcpIxmeb30qowZA8GjJ_U"));
-        services.AddSingleton(new GPTClient());
+        
+        var configService = new ConfigService();
+        var token = configService.GetString(ConfigNames.TelegramToken);
+        services.AddSingleton(new TelegramBotClient(token));
+        services.AddSingleton(configService);
 
         services.AddSingleton<ApplicationContext>();
         services.AddSingleton<TelegramMessagesService>();
         services.AddSingleton<UsersDataService>();
         services.AddSingleton<AccessDataService>();
+        services.AddSingleton<TelegramKeyboard>();
 
-        services.AddSingleton<IMessageHandler, StartHandler>();
-        services.AddSingleton<IMessageHandler, UnauthorizedMessageHandler>();
-        services.AddSingleton<IMessageHandler, SetAccessHandler>();
-        services.AddSingleton<IMessageHandler, RemoveAccessHandler>();
-        services.AddSingleton<IMessageHandler, ClearHistoryHandler>();
-        services.AddSingleton<IMessageHandler, PictureHandler>();
-        services.AddSingleton<IMessageHandler, MessageHandler>();
+        services.AddSingleton<ITextAccessibleHandler, UnauthorizedAccessibleHandler>();
+        services.AddSingleton<ICommandHandler, StartHandler>();
+        services.AddSingleton<ICommandHandler, SetAccessHandler>();
+        services.AddSingleton<ICommandHandler, RemoveAccessHandler>();
+        services.AddSingleton<ICommandHandler, ClearHistoryHandler>();
+        services.AddSingleton<ICommandHandler, ImageCommandHandler>();
+        services.AddSingleton<ITextAccessibleHandler, AccessibleHandler>();
 
-        //services.AddSingleton<ICallbackHandler, AcceptAgreementHandler>();
+        services.AddSingleton<ICallbackHandler, GeneratePhotoHandler>();
 
         services.AddSingleton<MessagesReceiver>();
         services.AddSingleton<UpdateSystem>();
         services.AddSingleton<TelegramBot>();
+        services.AddSingleton<GPTClient>();
 
         var serviceProvider = services.BuildServiceProvider();
         return serviceProvider;

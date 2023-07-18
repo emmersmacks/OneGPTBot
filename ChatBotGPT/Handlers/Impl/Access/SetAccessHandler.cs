@@ -1,13 +1,16 @@
 ﻿using ChatBotGPT.Database;
 using ChatBotGPT.Database.Models;
 using Telegram.Bot.Types;
+using VideoBot.Data;
 using VideoBot.Services;
 
 namespace VideoBot.Handlers.Messages.Impl;
 
-public class SetAccessHandler : IMessageHandler
+public class SetAccessHandler : ICommandHandler
 {
     private readonly AccessDataService _accessDataService;
+    
+    public EAccessType AccessType => EAccessType.Admin;
 
     public SetAccessHandler(AccessDataService accessDataService)
     {
@@ -22,6 +25,6 @@ public class SetAccessHandler : IMessageHandler
 
     public bool GetCondition(Message message)
     {
-        return message.Text.StartsWith("/set_access") && message.From.Id == 1419158298;
+        return message.Text.StartsWith("/set_access");
     }
 }

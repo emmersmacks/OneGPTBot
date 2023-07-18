@@ -7,18 +7,15 @@ namespace VideoBot.Handlers;
 
 public class UpdateSystem
 {
-    private readonly TelegramBotClient _telegramBotClient;
-
-    public UpdateSystem(TelegramBotClient telegramBotClient)
+    public UpdateSystem()
     {
-        _telegramBotClient = telegramBotClient;
     }
 
     public async void Init()
     {
         while (true)
         {
-            await Task.Delay(new TimeSpan(0,0,0,5));
+            await Task.Delay(new TimeSpan(0,0,0,1));
         }
     }
 }

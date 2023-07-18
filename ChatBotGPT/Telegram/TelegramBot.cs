@@ -4,7 +4,9 @@ using ChatBotGPT.Database.Models;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
+using VideoBot.Data;
 using VideoBot.Handlers;
+using VideoBot.Services;
 
 namespace ChatBotGPT;
 
@@ -12,15 +14,15 @@ public class TelegramBot
 {
     private readonly MessagesReceiver _messagesReceiver;
     private readonly TelegramBotClient _telegramBotClient;
-    private readonly UpdateSystem _updateSystem;
-    private readonly GPTClient _gptClient;
 
-    public TelegramBot(MessagesReceiver messagesReceiver, TelegramBotClient telegramBotClient, UpdateSystem updateSystem, GPTClient gptClient)
+
+    public TelegramBot(
+        MessagesReceiver messagesReceiver,
+        ConfigService configService,
+        TelegramBotClient telegramBotClient)
     {
         _messagesReceiver = messagesReceiver;
         _telegramBotClient = telegramBotClient;
-        _updateSystem = updateSystem;
-        _gptClient = gptClient;
     }
 
     public async Task Start()
@@ -29,7 +31,6 @@ public class TelegramBot
         _telegramBotClient.OnCallbackQuery += _messagesReceiver.OnCallbackReceived;
         
         _telegramBotClient.StartReceiving();
-        _updateSystem.Init();
         
         Console.WriteLine("Bot started");
         await Task.Delay(-1);

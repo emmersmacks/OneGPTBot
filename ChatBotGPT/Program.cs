@@ -13,7 +13,7 @@ using VideoBot.Services;
 
 var setup = new Setup();
 var serviceProvider = setup.Init();
-
+var path = Directory.GetCurrentDirectory();
 var bot = serviceProvider.GetService<TelegramBot>();
 await bot.Start();
 

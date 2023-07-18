@@ -1,28 +1,24 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using VideoBot.Data;
 
 namespace VideoBot.Services;
 
 public class ConfigService
 {
-    private Config _config;
+    private JObject _configuration;
     
     public ConfigService()
     {
-        LoadConfig();
+        using (var reader = new StreamReader("config.json"))
+        {
+            var json = reader.ReadToEnd();
+            _configuration = JObject.Parse(json);
+        }
     }
 
-    private void LoadConfig()
+    public string GetString(string key)
     {
-        var settingsPath = Path.Combine(Directory.GetCurrentDirectory(), "config.json");
-        var json = File.ReadAllText(settingsPath);
-        Console.WriteLine(json);
-        _config = JsonConvert.DeserializeObject<Config>(json) ?? throw new InvalidOperationException("Config file parse is fail");
-    }
-
-    public Config GetConfig()
-    {
-        if (_config == null)
-            throw new Exception("Config is null, but you trying to get them");
-        return _config;
+        return _configuration.GetValue(key).ToString();
     }
 }

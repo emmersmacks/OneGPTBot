@@ -10,4 +10,5 @@ public class UserModel
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public List<string> Messages { get; set; }
+    public string? Handler { get; set; }
 }

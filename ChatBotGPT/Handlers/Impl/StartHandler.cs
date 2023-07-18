@@ -1,18 +1,18 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
-
+using VideoBot.Data;
 using VideoBot.Services;
 
 namespace VideoBot.Handlers.Messages.Impl;
 
-public class StartHandler : IMessageHandler
+public class StartHandler : ICommandHandler
 {
-    private readonly TelegramBotClient _telegramBotClient;
     private readonly TelegramMessagesService _telegramMessagesService;
 
-    public StartHandler(TelegramBotClient? telegramBotClient, TelegramMessagesService telegramMessagesService)
+    public EAccessType AccessType => EAccessType.UnauthorizedUser;
+    
+    public StartHandler(TelegramMessagesService telegramMessagesService)
     {
-        _telegramBotClient = telegramBotClient;
         _telegramMessagesService = telegramMessagesService;
     }
 
@@ -23,6 +23,6 @@ public class StartHandler : IMessageHandler
 
     public bool GetCondition(Message message)
     {
-        return message.Text != null && message.Text == "/start";
+        return message.Text.StartsWith("/start");
     }
 }

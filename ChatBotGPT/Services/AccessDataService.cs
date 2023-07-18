@@ -38,13 +38,18 @@ public class AccessDataService
             context.SaveChanges();
         }
     }
-    
+
     public bool UserIsAvailable(long id)
     {
-        //if (id == 1419158298)
-        //    return true;
+        if (UserIsAdministrator(id))
+            return true;
         
         return Accesses.ContainsKey(id);
+    }
+    
+    public bool UserIsAdministrator(long id)
+    {
+        return id == 1419158298;
     }
     
     private void FillAccessDict()

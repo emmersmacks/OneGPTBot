@@ -4,7 +4,7 @@ using VideoBot.Data.SSH;
 
 namespace ChatBotGPT.Database;
 
-public class ApplicationContext : DbContext//, IDisposable
+public class ApplicationContext : DbContext
 {
     public DbSet<UserModel> Users { get; set; } = null!;
     public DbSet<AccessModel> Accesses { get; set; } = null!;
@@ -20,9 +20,6 @@ public class ApplicationContext : DbContext//, IDisposable
             Username = "root",
             Password = "aZ4hJ9mZ5qoD",
         };
-        //_sshTunnel = new SshTunnel(tunnelConfig);
-        
-        //_sshTunnel.Start();
         Database.EnsureCreated();
     }
 
@@ -30,9 +27,4 @@ public class ApplicationContext : DbContext//, IDisposable
     {
         optionsBuilder.UseNpgsql(@"Host=91.199.147.114;Database=Users;Username=DbUser;Password=Dbiyz123"); 
     }
-
-    //public void Dispose()
-    //{
-    //    //_sshTunnel.Dispose();
-    //}
 }

@@ -1,6 +1,6 @@
 ﻿namespace ChatBotGPT.ChatGPT;
 
-public class ResponseType
+public class Message
 {
     public string id;
     public string created;

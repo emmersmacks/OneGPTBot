@@ -1,23 +1,29 @@
 ﻿using System.Net;
 using Newtonsoft.Json;
 using Telegram.Bot.Types.InputFiles;
+using VideoBot;
+using VideoBot.Data;
+using VideoBot.Services;
 
 namespace ChatBotGPT.ChatGPT;
 
 public class GPTClient
 {
+    private readonly ConfigService _configService;
     private readonly string _model;
+    private readonly string _apiKey;
     
-    private const string API_KEY = "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";
     private const string CHAT_URL = "https://api.openai.com/v1/chat/completions";
     private const string DALLE_URL = "https://api.openai.com/v1/images/generations";
     
-    public GPTClient()
+    public GPTClient(ConfigService configService)
     {
+        _configService = configService;
+        _apiKey = _configService.GetString(ConfigNames.GptToken);
         _model = "gpt-3.5-turbo";
     }
 
-    public async Task<ResponseType> SendMessage(string text, List<string> messagesDict)
+    public async Task<Response> SendMessage(string text, List<string> messagesDict)
     {
         var messages = new List<MessageType>();
         foreach (var messagePair in messagesDict)
@@ -45,14 +51,20 @@ public class GPTClient
         
         using (var httpClient = new HttpClient()) {
             
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {API_KEY}");
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
             var requestJson = JsonConvert.SerializeObject(request);
             var requestContent = new StringContent(requestJson, System.Text.Encoding.UTF8, "application/json");
-            var httpResponseMessage = httpClient.PostAsync(CHAT_URL, requestContent).Result;
+            var httpResponseMessage = await httpClient.PostAsync(CHAT_URL, requestContent);
             var jsonString = await httpResponseMessage.Content.ReadAsStringAsync();
+            
             Console.WriteLine(jsonString);
-            var responseObject = JsonConvert.DeserializeObject<ResponseType>(jsonString);
-            return responseObject;
+
+            var response = new Response();
+            
+            response.Message = JsonConvert.DeserializeObject<Message>(jsonString);
+            response.Error = JsonConvert.DeserializeObject<Error>(jsonString);
+            
+            return response;
         }
     }
 
@@ -67,7 +79,7 @@ public class GPTClient
 
         using (var httpClient = new HttpClient()) {
             
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {API_KEY}");
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
             var requestJson = JsonConvert.SerializeObject(request);
             var requestContent = new StringContent(requestJson, System.Text.Encoding.UTF8, "application/json");
             var httpResponseMessage = httpClient.PostAsync(DALLE_URL, requestContent).Result;
