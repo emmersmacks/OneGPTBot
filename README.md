@@ -1,6 +1,7 @@
 # OneGPTBot
 
 Telegram bot written for convenient communication with the chatbot - ChatGPT and neural network for image generation - DALL-E.
+https://t.me/pich_gpt_bot
 
 ## Deploy
 To deploy the bot on a Linux server
