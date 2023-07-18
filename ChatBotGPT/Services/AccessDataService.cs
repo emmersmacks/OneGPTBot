@@ -5,10 +5,12 @@ namespace VideoBot.Services;
 
 public class AccessDataService
 {
+    private readonly ApplicationContext _applicationContext;
     public Dictionary<long, AccessModel> Accesses;
 
-    public AccessDataService()
+    public AccessDataService(ApplicationContext applicationContext)
     {
+        _applicationContext = applicationContext;
         FillAccessDict();
     }
 
@@ -20,23 +22,16 @@ public class AccessDataService
         };
         
         Accesses.Add(id, newAccess);
-        using (var context = new ApplicationContext())
-        {
-            
-            context.Accesses.Add(newAccess);
-            context.SaveChanges();
-        }
+        _applicationContext.Accesses.Add(newAccess);
+        _applicationContext.SaveChanges();
     }
 
     public void RemoveAccess(long id)
     {
         Accesses.Remove(id);
-        using (var context = new ApplicationContext())
-        {
-            var access = context.Accesses.FirstOrDefault(a => a.Id == id);
-            context.Accesses.Remove(access);
-            context.SaveChanges();
-        }
+        var access = _applicationContext.Accesses.FirstOrDefault(a => a.Id == id);
+        _applicationContext.Accesses.Remove(access);
+        _applicationContext.SaveChanges();
     }
 
     public bool UserIsAvailable(long id)
@@ -55,12 +50,9 @@ public class AccessDataService
     private void FillAccessDict()
     {
         Accesses = new Dictionary<long, AccessModel>();
-        using (var context = new ApplicationContext())
+        foreach (var access in _applicationContext.Accesses)
         {
-            foreach (var access in context.Accesses)
-            {
-                Accesses.Add(access.Id, access);
-            }
+            Accesses.Add(access.Id, access);
         }
     }
 }

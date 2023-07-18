@@ -6,10 +6,12 @@ namespace VideoBot.Services;
 
 public class UsersDataService
 {
+    private readonly ApplicationContext _applicationContext;
     public Dictionary<long, UserModel> Users;
 
-    public UsersDataService()
+    public UsersDataService(ApplicationContext applicationContext)
     {
+        _applicationContext = applicationContext;
         FillUsersDict();
     }
 
@@ -20,11 +22,10 @@ public class UsersDataService
             throw new Exception($"{nameof(this.GetType)}: -20 | User for update not found!");
 
         Users[userModel.Id] = userModel;
-        using (var context = new ApplicationContext())
-        {
-            context.Users.Update(userModel);
-            context.SaveChanges();
-        }
+
+        _applicationContext.Users.Update(userModel);
+        _applicationContext.SaveChanges();
+        
     }
 
     public UserModel GetOrCreateUser(Message message)
@@ -64,34 +65,27 @@ public class UsersDataService
     
     public void CreateUser(UserModel user)
     {
-        using (var context = new ApplicationContext())
-        {
-            Users.Add(user.Id, user);
-            context.Users.Add(user);
-            context.SaveChanges();
-        }
+
+        Users.Add(user.Id, user);
+        _applicationContext.Users.Add(user);
+        _applicationContext.SaveChanges();
+        
     }
 
     public void DeleteUser(long id)
     {
         Users.Remove(id);
-        using (var context = new ApplicationContext())
-        {
-            var dbUser = context.Users.FirstOrDefault(u => u.Id == id);
-            context.Users.Remove(dbUser);
-            context.SaveChanges();
-        }
+        var dbUser = _applicationContext.Users.FirstOrDefault(u => u.Id == id);
+        _applicationContext.Users.Remove(dbUser);
+        _applicationContext.SaveChanges();
     }
 
     private void FillUsersDict()
     {
         Users = new Dictionary<long, UserModel>();
-        using (var context = new ApplicationContext())
+        foreach (var user in _applicationContext.Users)
         {
-            foreach (var user in context.Users)
-            {
-                Users.Add(user.Id, user);
-            }
+            Users.Add(user.Id, user);
         }
     }
 }

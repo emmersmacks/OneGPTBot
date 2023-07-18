@@ -1,30 +1,27 @@
 ﻿using ChatBotGPT.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using VideoBot.Data;
 using VideoBot.Data.SSH;
+using VideoBot.Services;
 
 namespace ChatBotGPT.Database;
 
 public class ApplicationContext : DbContext
 {
+    private readonly ConfigService _configService;
     public DbSet<UserModel> Users { get; set; } = null!;
     public DbSet<AccessModel> Accesses { get; set; } = null!;
 
     private SshTunnel _sshTunnel;
 
-    public ApplicationContext()
+    public ApplicationContext(ConfigService configService)
     {
-        var tunnelConfig = new TunnelConfig
-        {
-            Host = "91.199.147.114",
-            Port = 22,
-            Username = "root",
-            Password = "aZ4hJ9mZ5qoD",
-        };
+        _configService = configService;
         Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(@"Host=91.199.147.114;Database=Users;Username=DbUser;Password=Dbiyz123"); 
+        optionsBuilder.UseNpgsql(_configService.GetString(ConfigNames.DatabaseConnection)); 
     }
 }

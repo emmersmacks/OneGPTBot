@@ -22,7 +22,7 @@ public class Setup
         services.AddSingleton(new TelegramBotClient(token));
         services.AddSingleton(configService);
 
-        services.AddSingleton<ApplicationContext>();
+        services.AddScoped<ApplicationContext>();
         services.AddSingleton<TelegramMessagesService>();
         services.AddSingleton<UsersDataService>();
         services.AddSingleton<AccessDataService>();
