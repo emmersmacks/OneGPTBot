@@ -6,6 +6,11 @@ https://t.me/pich_gpt_bot
 ## Deploy
 To deploy the bot on a Linux server
 
+- Install PostreSQL
+```
+sudo apt install postgresql postgresql-contrib
+sudo systemctl start postgresql.service
+```
 - Install .Net
 ```
 sudo apt install apt-transport-https ca-certificates
