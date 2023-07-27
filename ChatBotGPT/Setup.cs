@@ -1,5 +1,6 @@
 ﻿using ChatBotGPT.ChatGPT;
 using ChatBotGPT.Database;
+using ChatBotGPT.Handlers.Impl.Photo;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -29,12 +30,15 @@ public class Setup
         services.AddSingleton<TelegramKeyboard>();
 
         services.AddSingleton<ITextAccessibleHandler, UnauthorizedAccessibleHandler>();
+        services.AddSingleton<ITextAccessibleHandler, AccessibleHandler>();
+        
+        services.AddSingleton<IPendingHandler, PhotoDescriptionHandler>();
+
         services.AddSingleton<ICommandHandler, StartHandler>();
         services.AddSingleton<ICommandHandler, SetAccessHandler>();
         services.AddSingleton<ICommandHandler, RemoveAccessHandler>();
         services.AddSingleton<ICommandHandler, ClearHistoryHandler>();
         services.AddSingleton<ICommandHandler, ImageCommandHandler>();
-        services.AddSingleton<ITextAccessibleHandler, AccessibleHandler>();
 
         services.AddSingleton<ICallbackHandler, GeneratePhotoHandler>();
 

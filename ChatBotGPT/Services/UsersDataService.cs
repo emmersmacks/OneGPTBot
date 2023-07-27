@@ -15,6 +15,20 @@ public class UsersDataService
         FillUsersDict();
     }
 
+    public void SetUserHandler<THandler>(long fromId)
+    {
+        var user = GetUser(fromId);
+        user.Handler = typeof(THandler).FullName;
+        UpdateUser(user);
+    }
+
+    public void RemoveUserHandler(long fromId)
+    {
+        var user = GetUser(fromId);
+        user.Handler = null;
+        UpdateUser(user);
+    }
+
     public void UpdateUser(UserModel userModel)
     {
         var user = Users[userModel.Id];

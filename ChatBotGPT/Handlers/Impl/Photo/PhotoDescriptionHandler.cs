@@ -7,7 +7,7 @@ using Message = Telegram.Bot.Types.Message;
 
 namespace ChatBotGPT.Handlers.Impl.Photo;
 
-public class PhotoDescriptionHandler : ICheckedHandler
+public class PhotoDescriptionHandler : IPendingHandler
 {
     private readonly GPTClient _gptClient;
     private readonly TelegramMessagesService _telegramMessagesService;
