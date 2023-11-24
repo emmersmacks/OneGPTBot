@@ -7,6 +7,7 @@ using Telegram.Bot.Types.InputFiles;
 using Telegram.Bot.Types.ReplyMarkups;
 using VideoBot.Data;
 using VideoBot.Handlers.Messages;
+using VideoBot.Handlers.Messages.Impl.Game;
 using VideoBot.Services;
 using File = System.IO.File;
 
@@ -19,6 +20,7 @@ public class MessagesReceiver
     private readonly IEnumerable<ITextAccessibleHandler> _textHandlers;
     private readonly IEnumerable<ICallbackHandler> _callbackHandlers;
     private readonly IEnumerable<IPhotoAccessibleHandler> _photoHandlers;
+    private readonly IEnumerable<IGameAccessibleHandler> _gameHandlers;
     private readonly IEnumerable<ICommandHandler> _commandHandlers;
     private readonly IEnumerable<IPendingHandler> _pendingHandlers;
 
@@ -28,6 +30,7 @@ public class MessagesReceiver
         IEnumerable<ITextAccessibleHandler> textHandlers,
         IEnumerable<ICallbackHandler> callbackHandlers,
         IEnumerable<IPhotoAccessibleHandler> photoHandlers,
+        IEnumerable<IGameAccessibleHandler> gameHandlers,
         IEnumerable<ICommandHandler> commandHandlers,
         IEnumerable<IPendingHandler> pendingHandlers)
     {
@@ -36,6 +39,7 @@ public class MessagesReceiver
         _textHandlers = textHandlers;
         _callbackHandlers = callbackHandlers;
         _photoHandlers = photoHandlers;
+        _gameHandlers = gameHandlers;
         _commandHandlers = commandHandlers;
         _pendingHandlers = pendingHandlers;
     }
@@ -95,6 +99,8 @@ public class MessagesReceiver
                     return _textHandlers;
             case MessageType.Photo:
                 return _photoHandlers;
+            case MessageType.Game:
+                return _gameHandlers;
         }
 
         return null;
